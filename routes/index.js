@@ -32,18 +32,24 @@ module.exports = (db) => {
     console.log(temp);
     //------------------------------------------------------------------------------------ 
     
+    // let url = req.url == '/' ? '/?page=1' : req.url;
     let query = req.query;
     let page = req.query.page || 1;
-    let limit = 3;
-    let totalPage = Math.ceil(6/ limit);
-    let pages = (page -1) * limit;
-    let url = req.url == '/' ? '/?page=1' : req.url;
+    let limit = 2;
+    // let totalPage = Math.ceil(6 / limit);
+    let url = req.url === '/' ? '/page=1' : req.url
+
+    let pages = (page - 1) * limit
+    // console.log(rows);
+    
     
 
-    collection.find(temp).limit(limit).toArray(function (err, row) {
+    collection.find(temp).limit(limit).skip(pages).toArray().then(row => {
       collection.find(temp).count().then(count => {
-        
-        res.render('index', { data: row, moment, query:req.query, current:page, pages:Math.ceil(count/limit), query:query, url:url });
+
+        res.render('index', { data: row, moment, current: page, pages: Math.ceil(count / limit), query: query, url: url });
+
+        // res.render('index', { data: row, moment, query:req.query, current:page, pages:Math.ceil(count/limit), pages:totalPage ,query:query, url:url });
       })      
 
     })
