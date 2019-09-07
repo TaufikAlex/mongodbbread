@@ -10,56 +10,42 @@ module.exports = (db) => {
 
   router.get('/', function (req, res, next) {
 
-    const { ck1, ck2, ck3, ck4, ck5, ck6, nmid, nmstring, nminteger, nmfloat, nmdatestart, nmdateend,
+    const { ck2, ck3, ck4, ck5, ck6, nmstring, nminteger, nmfloat, nmdatestart, nmdateend,
       nmboolean } = req.query;
 
     // data untuk menampung filter
-    let temp = []
-
-    let stat = false
+    console.log(req.query.nminteger);
+    
+    let temp = {};
 
     // ---------------------------- function filter ----------------------------
-    if (ck1 && nmid) {
-      temp.push(`id = ${nmid}`)
-      stat = true
-    }
+    if (ck2 && nmstring) temp.dataString = nmstring;   
 
-    if (ck2 && nmstring) {
-      temp.push(`"dataString" = '${nmstring}'`)
-      stat = true
-    }
-
-    if (ck3 && nminteger) {
-      temp.push(`"dataInteger" = ${nminteger}`)
-      stat = true
-    }
-
-    if (ck4 && nmfloat) {
-      temp.push(`"dataFloat" = ${nmfloat}`)
-      stat = true
-    }
-
-    if (ck5 && nmdatestart && nmdateend) {
-      temp.push(`"dataDate" BETWEEN '${nmdatestart}' and '${nmdateend}'`)
-      stat = true
-    }
-
-    if (ck6 && nmboolean) {
-      temp.push(`"dataBoolean" = '${nmboolean}'`)
-      stat = true
-    }
+    if (ck3 && nminteger) temp.dataInteger = parseInt(nminteger);
+    
+    if (ck4 && nmfloat) temp.dataFloat =parseFloat(nmfloat);
+    
+    if (ck5 && nmdatestart && nmdateend) temp.dataString =new Date(nmdatestart);
+    
+    if (ck6 && nmboolean) temp.dataBoolean = nmboolean;
+    
+    console.log(temp);
     //------------------------------------------------------------------------------------ 
-    // conversi dari array ke string
-    let joindata = temp.join(' and ');
-
-    console.log(joindata);
+    
+    let query = req.query;
+    let page = req.query.page || 1;
+    let limit = 3;
+    let totalPage = Math.ceil(6/ limit);
+    let pages = (page -1) * limit;
+    let url = req.url == '/' ? '/?page=1' : req.url;
     
 
-    collection.find({}).toArray(function (err, row) {
-      //console.log(docs)
-      res.render('index', { data:row, moment });
+    collection.find(temp).limit(limit).toArray(function (err, row) {
+      collection.find(temp).count().then(count => {
+        
+        res.render('index', { data: row, moment, query:req.query, current:page, pages:Math.ceil(count/limit), query:query, url:url });
+      })      
 
-      
     })
   });
 
@@ -82,17 +68,17 @@ module.exports = (db) => {
 
   //====================Edit==============\\
   router.get('/edit/:id', (req, res) => {
-    collection.findOne({ _id: ObjectId(req.params.id)}, (err, data) => {
+    collection.findOne({ _id: ObjectId(req.params.id) }, (err, data) => {
       if (err) throw err;
       console.log(data);
-      
+
       res.render('edit', { item: data, moment })
       console.log(req.params.id);
     })
   });
 
   router.post('/edit/:id', (req, res) => {
-    collection.updateOne({ _id: ObjectId(req.params.id) }, {
+    collection.updateMany({ _id: ObjectId(req.params.id) }, {
       $set: {
         dataString: req.body.dataString
         , dataInteger: parseInt(req.body.dataInteger)
@@ -108,9 +94,6 @@ module.exports = (db) => {
     console.log(req.params.id);
 
   })
-
-
-
 
   //=============Deleted=================\\
   router.get('/deleted/:id', (req, res) => {

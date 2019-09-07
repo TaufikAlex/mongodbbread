@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>MongoDb Bread</title>
+    <title>Postgres Bread</title>
   </head>
   <body>
     <div class="container" style="padding-top: 20px">
@@ -42,7 +42,7 @@
                 <input class="form-check-input" 
                 type="checkbox" 
                 name="ck2"
-               <%=(query.ck2) ? 'checked': '' %> />String
+                />String
             </div>
         </div>
         <div class="col-sm-10">
@@ -53,7 +53,7 @@
                 id="String" 
                 name="nmstring"
                 placeholder="String"
-                value="<%= query.nmstring %>" />
+                 />
                 </div>
              </div>
         </div>
@@ -63,27 +63,27 @@
                 <div class="form-check">
                     <input class="form-check-input" 
                     type="checkbox" 
-                    name="ck3" <%=(query.ck3) ? 'checked': '' %>/>Integer
+                    name="ck3"/>Integer
                 </div>
             </div>
             <div class="col-sm-10">
                 <div class="form-group">
                     <input type="text" class="form-control" id="Integer" name="nminteger"
-                    placeholder="Integer" value="<%= query.nminteger %>" />
+                    placeholder="Integer" />
                 </div>
-            </div>
+        </div>
         </div>
         <!---------Menampilkan box Float------->
         <div class="row">
             <div class="col-sm-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="ck4" <%=(query.ck4) ? 'checked': '' %>/>Float
+                    <input class="form-check-input" type="checkbox" name="ck4"/>Float
                 </div>
             </div>
             <div class="col-sm-10">
                 <div class="form-group">
                     <input type="text" class="form-control" id="Float" name="nmfloat"
-                    placeholder="Float" value="<%= query.nmfloat %>"/>
+                    placeholder="Float" />
                 </div>
               </div>
             </div>
@@ -91,16 +91,16 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="ck5" <%=(query.ck5) ? 'checked': '' %>/>Date
+                    <input class="form-check-input" type="checkbox" name="ck5"/>Date
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <input type="date" class="form-control" id="Date" name="nmdateStart"
-                    placeholder="START DATE" value="<%= query.nmdateStart %>"/>
+                    placeholder="START DATE" />
                     TO
                     <input type="date" class="form-control" id="Date" name="nmdateEnd"
-                    placeholder="END DATE" value="<%= query.nmdateEnd %>"/>
+                    placeholder="END DATE" />
                 </div>
               </div>
         </div>
@@ -108,12 +108,12 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="ck6" <%=(query.ck6) ? 'checked': '' %>/>Boolean
+                    <input class="form-check-input" type="checkbox" name="ck6"/>Boolean
                 </div>
             </div>
             <div class="col-sm-5">    
                     <div class="form-group">                    
-                        <select class="form-control" name="nmboolean" value="<%= query.nmboolean %>">
+                        <select class="form-control" name="nmboolean">
                         <option value="">--pilih type--</option>
                         <option value="true">True</option>
                         <option value="false">False</option>
@@ -125,7 +125,7 @@
         <table class="table table-striped" border="1">
             <tr>
                 
-                <th scope="col">String</th>
+                <th scope="col">Umur</th>
                 <th scope="col">Integer</th>
                 <th scope="col">Float</th>
                 <th scope="col">Date</th>
